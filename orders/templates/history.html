@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="bg-[#0d0d0d] p-8 rounded-3xl border border-white/5">
+  <h2 class="text-white font-black italic uppercase mb-6">Your Acquisition Logs</h2>
+  
+  {% for order in orders %}
+      <div class="flex justify-between py-4 border-b border-white/5">
+          <span class="text-gray-400">#{{ order.id }} - {{ order.product_name }}</span>
+          <span class="text-red-600 font-bold">Rs. {{ order.total_price }}</span>
+      </div>
+  {% empty %}
+      <p class="text-gray-600 italic">No orders found for your account.</p>
+  {% endfor %}
+</div>
+
+
+{% endblock %}

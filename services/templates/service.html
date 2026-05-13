@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Cinematic System Loader -->
+<div id="page-loader" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out">
+    <div class="relative flex flex-col items-center">
+        <div class="absolute inset-0 border border-red-600/30 rounded-full animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] scale-150"></div>
+        <div class="w-24 h-24 border-t-2 border-l-2 border-red-600 rounded-full animate-[spin_1.5s_linear_infinite] flex items-center justify-center">
+            <div class="w-16 h-16 border-b-2 border-r-2 border-white/20 rounded-full animate-[spin_2s_linear_infinite_reverse]"></div>
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <span class="text-white text-xs font-black tracking-[0.4em] uppercase">CCS</span>
+        </div>
+    </div>
+    <div class="mt-8 flex flex-col items-center gap-2">
+        <span class="text-[10px] font-black text-red-600 uppercase tracking-[0.5em] animate-pulse">Initializing Protocol</span>
+        <div class="flex gap-1">
+            <div class="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce"></div>
+            <div class="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+            <div class="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+        </div>
+    </div>
+</div>
+<!-- Custom Font & Theme -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --accent: #ff0000;
+        --accent-glow: rgba(255, 0, 0, 0.2);
+        --bg-deep: #030303;
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+        font-family: 'Outfit', sans-serif;
+        background-color: var(--bg-deep);
+        color: #f5f5f5;
+    }
+
+    .minimal-card {
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .minimal-card:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 0, 0, 0.3);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    .hover-glow {
+        position: absolute;
+        bottom: -30%;
+        right: -30%;
+        width: 100px;
+        height: 100px;
+        background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+        border-radius: 9999px;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+
+    .minimal-card:hover .hover-glow {
+        opacity: 1;
+    }
+</style>
+
+<div class="relative min-h-screen pt-24 pb-20 px-6">
+    <div class="max-w-7xl mx-auto relative z-10">
+        
+        <!-- Minimal Header -->
+        <div class="mb-16 border-l-2 border-red-600 pl-8">
+            <h2 class="text-red-600 font-black tracking-[0.5em] uppercase text-[9px] mb-2">Protocol.v4</h2>
+            <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter leading-none">
+                SERVICE <span class="text-neutral-800">MATRIX</span>
+            </h1>
+        </div>
+
+        <!-- Grid Matrix -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for service in services %}
+            <div class="minimal-card p-6 rounded-[1.5rem] flex flex-col group h-full">
+                <div class="hover-glow"></div>
+
+                <!-- Top Row -->
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-[10px] font-black text-neutral-700 italic tracking-widest">S-0{{ forloop.counter }}</span>
+                    {% if service.is_available %}
+                        <div class="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,0,0.5)]"></div>
+                    {% endif %}
+                </div>
+
+                <!-- Identity -->
+                <div class="space-y-3 flex-grow mb-8">
+                    <h4 class="text-2xl font-black text-white italic uppercase tracking-tight group-hover:text-red-600 transition-colors duration-500 leading-tight">
+                        {{ service.service_name }}
+                    </h4>
+                    <p class="text-neutral-500 text-[10px] font-medium uppercase tracking-wider line-clamp-2">
+                        {{ service.description }}
+                    </p>
+                </div>
+
+                <!-- Footer -->
+                <div class="pt-6 border-t border-white/5 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-[9px] font-bold text-neutral-800 uppercase">PKR</span>
+                            <span class="text-xl font-black text-white italic tracking-tighter">{{ service.price }}</span>
+                        </div>
+                    </div>
+
+                    {% if service.is_available %}
+                    <a href="{% url 'booking' service.id %}" class="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center transition-all hover:bg-red-600 hover:border-red-600 active:scale-95">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                    {% else %}
+                    <span class="text-[8px] font-black text-neutral-700 uppercase tracking-widest italic">Full</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pageLoader = document.getElementById('page-loader');
+        if(pageLoader) {
+            setTimeout(() => {
+                pageLoader.classList.add('opacity-0');
+                setTimeout(() => {
+                    pageLoader.style.display = 'none';
+                }, 1000);
+            }, 500);
+        }
+    });
+</script>
+{% endblock %}

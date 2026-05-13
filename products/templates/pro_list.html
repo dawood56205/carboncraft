@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Cinematic System Loader -->
+<div id="page-loader" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out">
+    <div class="relative flex flex-col items-center">
+        <!-- Pulse ring -->
+        <div class="absolute inset-0 border border-red-600/30 rounded-full animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] scale-150"></div>
+        <div class="w-24 h-24 border-t-2 border-l-2 border-red-600 rounded-full animate-[spin_1.5s_linear_infinite] flex items-center justify-center">
+            <div class="w-16 h-16 border-b-2 border-r-2 border-white/20 rounded-full animate-[spin_2s_linear_infinite_reverse]"></div>
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <span class="text-white text-xs font-black tracking-[0.4em] uppercase">CCS</span>
+        </div>
+    </div>
+    <div class="mt-8 flex flex-col items-center gap-2">
+        <span class="text-[10px] font-black text-red-600 uppercase tracking-[0.5em] animate-pulse">Initializing Protocol</span>
+        <div class="flex gap-1">
+            <div class="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce"></div>
+            <div class="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+            <div class="w-1.5 h-1.5 bg-white/40 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-black py-10 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-center items-center md:items-end mb-10 md:mb-16 gap-4 md:gap-8 border-b border-white/5 pb-12 text-center md:text-left">
+        <div class="space-y-4">
+          <div class="flex items-center justify-center md:justify-start gap-3">
+            <span class="w-8 md:w-12 h-[2px] bg-red-600"></span>
+            <h2 class="text-[8px] md:text-[10px] uppercase tracking-[0.5em] md:tracking-[1em] font-black text-red-600">Inventory Alpha</h2>
+          </div>
+          <h1 class="text-6xl sm:text-7xl md:text-8xl font-black italic tracking-tighter text-white uppercase leading-none">
+            sh<span class="text-white/10 italic">op</span>
+          </h1>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Modernized Category Bar -->
+<div class="flex justify-center mb-12 md:mb-20 px-6">
+    <div class="relative group">
+        <!-- Glow Effect Backdrop -->
+        <div class="absolute -inset-1 bg-gradient-to-r from-red-600/20 to-red-900/20 rounded-[2rem] blur-xl opacity-50 group-hover:opacity-75 transition duration-1000"></div>
+        
+        <div class="relative flex items-center p-2 bg-black/40 backdrop-blur-3xl border border-white/5 rounded-[2rem] shadow-2xl max-w-full overflow-x-auto scrollbar-hide">
+            <!-- All Inventory Link -->
+            <a href="{% url 'productlist' %}" 
+               class="whitespace-nowrap flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 transform hover:scale-105
+               {% if not active_filter %} 
+                    bg-red-600 text-white shadow-[0_0_25px_rgba(220,38,38,0.4)] border border-red-500/50
+               {% else %} 
+                    text-white hover:bg-white/10 border border-transparent hover:border-white/20
+               {% endif %}">
+                <span class="w-1.5 h-1.5 rounded-full {% if not active_filter %}bg-white animate-pulse{% else %}bg-slate-700{% endif %}"></span>
+                Inventory
+            </a>
+
+            <div class="w-[1px] h-6 bg-white/10 mx-3 flex-shrink-0"></div>
+
+            <div class="flex gap-2">
+                {% for code, name in categories %}
+                    <a href="?type={{ code }}" 
+                       class="whitespace-nowrap flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 transform hover:scale-105
+                       {% if active_filter == code %} 
+                            bg-red-600 text-white shadow-[0_0_25px_rgba(220,38,38,0.4)] border border-red-500/50
+                       {% else %} 
+                            text-white hover:bg-white/10 border border-transparent hover:border-white/20
+                       {% endif %}">
+                        {{ name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-md mx-auto py-4 px-6">
+  <form action="{% url 'productlist' %}" method="get" class="group relative">
+    <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none z-10">
+      <svg class="h-4 w-4 text-slate-500 group-focus-within:text-red-600 transition-colors" 
+           xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+
+    <input 
+      type="text" 
+      name="product" 
+      placeholder="Scan supply matrix..." 
+      value="{{ request.GET.search }}"
+      class="w-full bg-white/[0.02] border border-white/5 text-white text-xs md:text-sm font-semibold rounded-2xl py-4 pl-14 pr-28 
+             placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-red-600/30 focus:border-red-600/50 
+             backdrop-blur-3xl transition-all shadow-2xl group-focus-within:bg-white/[0.04]"
+    >
+
+    <div class="absolute inset-y-2 right-2 flex items-center">
+      <button type="submit" 
+              class="h-full px-6 bg-red-600 hover:bg-red-700 text-white text-[10px] font-black uppercase tracking-[0.2em] 
+                     rounded-xl transition-all active:scale-95 shadow-[0_0_20px_rgba(220,38,38,0.2)]">
+        Execute
+      </button>
+    </div>
+  </form>
+  <p class="mt-3 text-[8px] md:text-[9px] text-center text-gray-600 uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold">
+    Studio-Verified Inventory Only
+  </p>
+</div>
+
+<section class="max-w-7xl mx-auto px-4 py-10 md:py-16">
+  <div class="mb-8 md:mb-12 border-l-4 border-red-600 pl-4 md:pl-6">
+      <h2 class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-black text-red-600 mb-2">The Supply</h2>
+      <h1 class="text-3xl md:text-4xl font-black italic tracking-tighter text-white uppercase">Professional <span class="text-gray-800 italic">Inventory</span></h1>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+    {% for pro in all_products %}
+    <div class="group relative flex flex-col rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/5 transition-all duration-500 hover:border-red-600/30 hover:shadow-[0_0_40px_-10px_rgba(220,38,38,0.15)]">
+        
+        <!-- Background glow effect on hover -->
+        <div class="absolute inset-0 bg-gradient-to-br from-red-600/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+        <!-- Image Container -->
+        <div class="relative h-64 md:h-72 w-full overflow-hidden">
+            {% if pro.photo %}
+                <img class="w-full h-full object-cover grayscale-[0.8] opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000" 
+                     src="{{pro.photo.url}}" 
+                     alt="{{ pro.product }}">
+            {% else %}
+                <div class="w-full h-full flex flex-col items-center justify-center space-y-3 bg-[#0d0d0d]">
+                    <div class="w-12 h-[1px] bg-red-600/30"></div>
+                    <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.5em]">No Data</span>
+                </div>
+            {% endif %}
+            
+            <!-- Type Badge (Floating) -->
+            <div class="absolute top-5 left-5 z-20">
+                <span class="px-4 py-1.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-xl text-[8px] font-black text-white uppercase tracking-[0.3em] shadow-2xl">
+                    {{ pro.get_type_display }}
+                </span>
+            </div>
+            
+            <!-- Gradient Overlay for smooth transition to text -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent z-10"></div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="p-6 md:p-8 flex flex-col flex-grow relative z-20 -mt-24">
+            <!-- Title -->
+            <div class="mb-3">
+                <h3 class="text-2xl md:text-3xl font-black italic tracking-tighter text-white uppercase leading-none drop-shadow-lg group-hover:text-red-600 transition-colors duration-300 line-clamp-1">
+                    {{pro.product}}
+                </h3>
+            </div>
+            
+            <!-- Details -->
+            <p class="text-[11px] text-gray-400 font-medium leading-relaxed line-clamp-2 mb-8 uppercase tracking-wider opacity-80 group-hover:opacity-100 transition-opacity">
+                {{pro.details}}
+            </p>
+
+            <!-- Bottom Action/Price Row -->
+            <div class="mt-auto flex items-end justify-between pt-2">
+                <div>
+                    <p class="text-[8px] font-black text-red-600 uppercase tracking-[0.5em] mb-1.5">Price</p>
+                    <p class="text-2xl md:text-3xl font-black text-white italic tracking-tighter leading-none">
+                        <span class="text-white/30 text-sm not-italic font-bold mr-1">RS</span>{{pro.price}}
+                    </p>
+                </div>
+                
+                <!-- Action Button -->
+                <a href="{% url 'pro_det' pro.id %}" 
+                   class="relative overflow-hidden group/btn flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-white/5 border border-white/10 rounded-2xl transition-all duration-300 hover:bg-red-600 hover:border-red-600 hover:shadow-[0_0_20px_rgba(220,38,38,0.4)] hover:-translate-y-1">
+                    <svg class="w-5 h-5 text-white transition-all duration-300 group-hover/btn:-translate-y-1 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full py-24 flex flex-col items-center justify-center space-y-6">
+        <div class="w-20 h-[1px] bg-red-600/30"></div>
+        <p class="text-white/20 font-black italic text-3xl md:text-4xl uppercase tracking-tighter drop-shadow-md">Void Detected</p>
+        <div class="w-20 h-[1px] bg-red-600/30"></div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="bg-black py-10 px-4 sm:px-6 overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="relative mb-12 md:mb-20 text-center">
+        <h2 class="text-[8px] md:text-[10px] uppercase tracking-[0.6em] md:tracking-[0.8em] font-black text-red-600 mb-4">Elite Automotive Supply</h2>
+        <h1 class="text-4xl md:text-7xl font-black italic tracking-tighter text-white uppercase leading-tight">
+          Why Choose <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-900">CarbonCraft</span>
+        </h1>
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-48 md:w-64 h-48 md:h-64 bg-red-600/10 blur-[100px] md:blur-[120px] rounded-full -z-10"></div>
+      </div>
+  
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div class="group relative p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-red-600/50 transition-all duration-500">
+          <div class="mb-6 inline-flex p-4 rounded-2xl bg-red-600/10 text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-8 md:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-lg md:text-xl font-black uppercase italic tracking-tight text-white mb-4">Peak Performance</h3>
+          <p class="text-gray-500 text-xs md:text-sm leading-relaxed font-medium">
+            High-quality spare parts and premium accessories engineered for extreme durability and reliability on every terrain.
+          </p>
+        </div>
+  
+        <div class="group relative p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-red-600/50 transition-all duration-500">
+          <div class="mb-6 inline-flex p-4 rounded-2xl bg-red-600/10 text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-8 md:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-lg md:text-xl font-black uppercase italic tracking-tight text-white mb-4">Certified Quality</h3>
+          <p class="text-gray-500 text-xs md:text-sm leading-relaxed font-medium">
+            Each component is rigorously vetted to exceed industry standards, ensuring total confidence in every hardware upgrade.
+          </p>
+        </div>
+  
+        <div class="group relative p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-red-600/50 transition-all duration-500">
+          <div class="mb-6 inline-flex p-4 rounded-2xl bg-red-600/10 text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-8 md:h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-lg md:text-xl font-black uppercase italic tracking-tight text-white mb-4">Pure Authenticity</h3>
+          <p class="text-gray-500 text-xs md:text-sm leading-relaxed font-medium">
+            A trusted choice focusing on affordability and 100% genuine parts to maintain your vehicle's long-term legacy.
+          </p>
+        </div>
+      </div>
+  
+      <div class="mt-12 md:mt-20 flex justify-center">
+        <div class="h-px w-24 bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
+      </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pageLoader = document.getElementById('page-loader');
+        if(pageLoader) {
+            setTimeout(() => {
+                pageLoader.classList.add('opacity-0');
+                setTimeout(() => {
+                    pageLoader.style.display = 'none';
+                }, 1000);
+            }, 500);
+        }
+    });
+</script>
+{% endblock %}

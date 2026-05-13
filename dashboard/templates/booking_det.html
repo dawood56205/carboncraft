@@ -1,0 +1,79 @@
+{% extends "base1.html" %}
+{% block content %}
+{% load static tailwind_tags %}
+{% load static %}
+
+<section class="min-h-screen bg-[#050505] py-8 px-4 flex flex-col items-center justify-center font-sans">
+    <div class="max-w-[280px] w-full">
+        
+        <div class="text-center mb-8 space-y-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neutral-500/30 bg-neutral-500/10 text-[9px] font-black text-neutral-500 uppercase tracking-[0.3em]">
+                <span class="relative flex h-2 w-2">
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-neutral-500"></span>
+                </span>
+                Admin View
+            </div>
+            <h2 class="text-[9px] uppercase tracking-[0.4em] font-black text-white mt-2">Service Manifest</h2>
+        </div>
+
+        <div class="relative bg-[#111] border-x border-t border-white/10 shadow-2xl font-mono text-sm mx-auto" style="border-radius: 12px 12px 0 0;">
+            
+            <div class="p-4 pb-2 text-center border-b border-dashed border-white/20">
+                <h3 class="text-base font-black text-white uppercase tracking-widest">CarbonCraft</h3>
+                <p class="text-[9px] text-gray-500 uppercase tracking-widest mt-1">Booking Details</p>
+                <p class="text-[9px] text-gray-500 mt-1">ID: #CCS-{{ booking.id|stringformat:"04d" }}</p>
+            </div>
+            
+            <div class="p-4 space-y-4">
+                
+                <div class="space-y-2 border-b border-dashed border-white/20 pb-4">
+                    <div class="flex justify-between items-start text-[10px] text-gray-400">
+                        <span>Sched:</span>
+                        <span class="text-white">{{ booking.booking_date|date:"d/m/y" }} {{ booking.booking_time|time:"H:i" }}</span>
+                    </div>
+                    <div class="flex justify-between items-start text-[10px] text-gray-400">
+                        <span>Client:</span>
+                        <span class="text-white text-right truncate max-w-[60%]">{{ booking.first_name }} {{ booking.last_name }}</span>
+                    </div>
+                    <div class="flex justify-between items-start text-[10px] text-gray-400">
+                        <span>Phone:</span>
+                        <span class="text-white text-right">{{ booking.phone }}</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2 border-b border-dashed border-white/20 pb-4">
+                    <p class="text-[9px] text-gray-500 uppercase tracking-widest mb-1">Service Details</p>
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold text-white max-w-[60%] leading-tight">{{ booking.service.title|default:booking.service.service_name }}</span>
+                        <span class="text-xs text-white whitespace-nowrap">Rs. {{ booking.service.price }}</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-1 mt-1">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total</span>
+                    <span class="text-base font-black text-red-600">Rs. {{ booking.service.price }}</span>
+                </div>
+
+                <div class="pt-2 text-center space-y-1">
+                    <p class="text-[8px] text-gray-500 leading-tight">Address: {{ booking.address }}</p>
+                    <p class="text-[8px] text-gray-600 uppercase tracking-widest mt-2">Internal Copy</p>
+                </div>
+            </div>
+            
+            <!-- Receipt zig-zag bottom edge -->
+            <div class="h-3 w-full" style="background-image: radial-gradient(circle at 6px 0, transparent 6px, #111 7px); background-size: 12px 12px; background-repeat: repeat-x; transform: rotate(180deg); margin-top: -1px;"></div>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-2 max-w-[280px] mx-auto">
+            <button onclick="window.print()" class="w-full py-2 bg-white/5 border border-white/10 text-white text-[9px] font-black uppercase tracking-widest rounded-lg hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                Print Manifest
+            </button>
+            <a href="{% url 'admin_dashboard' %}" class="w-full py-2 bg-red-600 text-white text-center text-[9px] font-black uppercase tracking-widest rounded-lg hover:bg-red-700 transition-all">
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

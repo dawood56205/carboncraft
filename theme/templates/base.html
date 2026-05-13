@@ -1,0 +1,335 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CARBONCRAFT STUDIO </title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    {% tailwind_css %}
+    <style>
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+        body{
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
+<style>
+    .intro-hud {
+        background: linear-gradient(90deg, rgba(255,0,0,0.1) 1px, transparent 1px) 0 0 / 20px 20px,
+                    linear-gradient(rgba(255,0,0,0.1) 1px, transparent 1px) 0 0 / 20px 20px;
+        mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    }
+
+    .hud-line {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,0,0,0.5), transparent);
+    }
+
+    .glow-text {
+        text-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    }
+
+    @keyframes pulse-border {
+        0%, 100% { border-color: rgba(255, 0, 0, 0.2); }
+        50% { border-color: rgba(255, 0, 0, 0.6); }
+    }
+
+    .glass-btn {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-btn:hover {
+        background: rgba(255, 0, 0, 0.1);
+        border-color: rgba(255, 0, 0, 0.4);
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+    }
+    @keyframes scanline {
+        from { transform: translateY(-100%); }
+        to { transform: translateY(1000%); }
+    }
+</style>
+    
+   
+</head>
+
+<body  class="hide-scrollbar bg-black text-black font-sans leading-normal tracking-normal ">
+    <nav id="navbar" class="sticky top-0 z-50 w-full px-6 pt-6 transition-transform duration-500">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative overflow-hidden rounded-3xl bg-red-700 border-2 border-white/20 shadow-[0_25px_60px_-15px_rgba(185,28,28,0.5)] bg-gradient-to-b from-red-600 to-red-700">
+                
+                <div class="absolute inset-0 bg-black/5 pointer-events-none"></div>
+    
+                <div class="absolute bottom-0 left-0 h-[3px] w-full bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+    
+                <div class="px-10 py-6 flex items-center justify-between relative z-10">
+                    
+                    <div class="flex items-center gap-6 group cursor-pointer">
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-white blur-2xl rounded-full opacity-10 group-hover:opacity-30 transition-opacity duration-700"></div>
+                            <img class="relative w-14 h-14 rounded-2xl object-cover border-2 border-white/80 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-xl" 
+                                 src="{% static 'ccs.jpeg' %}" 
+                                 alt="CCS Logo">
+                        </div>
+                        
+                        <div class="flex flex-col">
+                            <h1 class="text-3xl font-black tracking-tighter text-white uppercase italic leading-none">
+                                Carbon <span class="text-gray-900">Craft</span>
+                            </h1>
+                            <span class="text-[10px] font-black tracking-[0.6em] text-black/60 uppercase mt-1">
+                                Studio Elite
+                            </span>
+                        </div>
+                    </div>
+            
+                    <ul class="hidden md:flex items-center gap-5">
+                        <li>
+                            <a class="relative group py-2" href="{% url 'home' %}">
+                                <span class="text-xs font-black tracking-[0.25em] text-white/80 group-hover:text-white transition-colors uppercase">Home</span>
+                                <span class="absolute -bottom-1 left-0 w-0 h-1 bg-black rounded-full transition-all duration-300 group-hover:w-full"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="relative group py-2" href="{% url 'productlist' %}">
+                                <span class="text-xs font-black tracking-[0.25em] text-white/80 group-hover:text-white transition-colors uppercase">Shop</span>
+                                <span class="absolute -bottom-1 left-0 w-0 h-1 bg-black rounded-full transition-all duration-300 group-hover:w-full"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="relative group py-2" href="{% url 'services' %}">
+                                <span class="text-xs font-black tracking-[0.25em] text-white/80 group-hover:text-white transition-colors uppercase">Services</span>
+                                <span class="absolute -bottom-1 left-0 w-0 h-1 bg-black rounded-full transition-all duration-300 group-hover:w-full"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="relative group py-2" href="{% url 'about' %}">
+                                <span class="text-xs font-black tracking-[0.25em] text-white/80 group-hover:text-white transition-colors uppercase">About</span>
+                                <span class="absolute -bottom-1 left-0 w-0 h-1 bg-black rounded-full transition-all duration-300 group-hover:w-full"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="relative group px-4 py-1.5 flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur-sm rounded-full hover:border-blue-500/50 hover:bg-blue-500/5 transition-all duration-500 overflow-hidden" href="{% url 'ai_agents' %}">
+                                <!-- Subtle background glow sweep -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-600/5 to-blue-600/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                
+                                <!-- Bot Icon -->
+                                <svg class="w-3.5 h-3.5 text-blue-400/70 group-hover:text-blue-400 transition-colors relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                </svg>
+                                
+                                <span class="text-[10px] font-black tracking-[0.25em] text-white/70 group-hover:text-white transition-colors relative z-10 uppercase">AI Agents</span>
+                                
+                                <!-- Minimal Blue Status -->
+                                <div class="w-1 h-1 rounded-full bg-blue-500/80 shadow-[0_0_8px_rgba(59,130,246,0.5)] relative z-10"></div>
+                            </a>
+                        </li>
+                    </ul>
+    
+                    {% if user.is_staff %}
+                    <div class="hidden md:flex items-center gap-6">
+                        <a href="{% url 'admin_dashboard' %}" class="group relative inline-flex items-center gap-2 px-5 py-2.5 overflow-hidden rounded-full bg-black/50 border border-white/10 text-white hover:border-red-600/50 hover:bg-[#0a0a0a] transition-all active:scale-95 shadow-lg">
+                            <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                            
+                            <svg class="w-3.5 h-3.5 text-red-600 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="relative z-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-300 group-hover:text-white transition-colors">Admin Panel</span>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-white hover:text-red-600 transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 backdrop-blur-xl translate-x-full transition-transform duration-500 md:hidden flex flex-col items-center justify-center">
+            <button id="mobile-close-btn" class="absolute top-10 right-10 p-2 text-white hover:text-red-600 transition-colors">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <ul class="flex flex-col items-center gap-8">
+                <li><a class="text-2xl font-black tracking-widest text-white uppercase hover:text-red-600 transition-colors" href="{% url 'home' %}">Home</a></li>
+                <li><a class="text-2xl font-black tracking-widest text-white uppercase hover:text-red-600 transition-colors" href="{% url 'productlist' %}">Shop</a></li>
+                <li><a class="text-2xl font-black tracking-widest text-white uppercase hover:text-red-600 transition-colors" href="{% url 'services' %}">Services</a></li>
+                <li class="my-4">
+                    <a class="relative group px-8 py-3 flex items-center gap-4 border border-white/10 bg-white/5 backdrop-blur-md rounded-full hover:border-blue-500/40 hover:bg-blue-500/5 transition-all duration-500" href="{% url 'ai_agents' %}">
+                        <svg class="w-6 h-6 text-blue-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                        </svg>
+                        <span class="text-xl font-black tracking-widest text-white/80 group-hover:text-blue-400 uppercase">AI Agents</span>
+                        <div class="w-2.5 h-2.5 rounded-full bg-blue-500/80 shadow-[0_0_10px_rgba(59,130,246,0.6)] ml-auto"></div>
+                    </a>
+                </li>
+                <li><a class="text-2xl font-black tracking-widest text-white uppercase hover:text-red-600 transition-colors" href="{% url 'about' %}">About</a></li>
+                {% if user.is_staff %}
+                <li class="pt-8 border-t border-white/10">
+                    <a class="text-xl font-black tracking-widest text-red-600 uppercase hover:text-white transition-colors" href="{% url 'admin_dashboard' %}">Admin Panel</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    
+    <script>
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileClose = document.getElementById('mobile-close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+    </script>
+    
+
+    <marquee scrollamount = "12" behavior="" direction="">
+    <div class="relative flex overflow-x-hidden bg-black/90 border-y border-white/5 py-4 select-none">
+  
+        <div class="flex animate-[scroll_20s_linear_infinite] whitespace-nowrap gap-12 items-center">
+          
+          <div class="flex items-center gap-12 shrink-0">
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-red-600">Free Delivery on all products</span>
+            <div class="w-1.5 h-1.5 rotate-45 bg-white/20"></div>
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-white">CarbonCraft Detailing Supplies</span>
+            <div class="w-1.5 h-1.5 rotate-45 bg-white/20"></div>
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-red-600 italic">Limited Time Offer</span>
+            <div class="w-1.5 h-1.5 rotate-45 bg-white/20"></div>
+          </div>
+      
+          <div class="flex items-center gap-12 shrink-0" aria-hidden="true">
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-red-600">Free Delivery on all products</span>
+            <div class="w-1.5 h-1.5 rotate-45 bg-white/20"></div>
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-white">CarbonCraft Detailing Supplies</span>
+            <div class="w-1.5 h-1.5 rotate-45 bg-white/20"></div>
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-red-600 italic">Limited Time Offer</span>
+            <div class="w-1.5 h-1.5 rotate-45 bg-white/20"></div>
+          </div>
+        </div>
+    </marquee>
+      
+        <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
+        <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
+      </div>
+    <div class="relative w-full py-6 px-6 my-4 overflow-hidden bg-[#0a0a0a] rounded-[2rem] border border-white/5 shadow-xl group">
+  
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-64 h-64 bg-red-600/10 blur-[80px] rounded-full group-hover:bg-red-600/20 transition-colors duration-1000"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-48 h-48 bg-red-900/10 blur-[60px] rounded-full"></div>
+      
+        <div class="relative z-10 flex flex-col items-center justify-center">
+          
+          <div class="mb-2 px-3 py-1 rounded-full border border-red-500/20 bg-red-500/5 backdrop-blur-md">
+            <span class="text-[9px] font-black uppercase tracking-[0.3em] text-red-500">Est. 2026</span>
+          </div>
+      
+          <h1 class="text-3xl md:text-5xl font-black italic tracking-tighter text-white uppercase leading-none text-center select-none">
+            CARBON CRAFT <span class="text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-transparent">STUDIO</span>
+          </h1>
+      
+          <div class="mt-3 flex items-center gap-3 w-full max-w-[180px]">
+              <div class="h-px flex-1 bg-gradient-to-r from-transparent to-white/10"></div>
+              <div class="w-1.5 h-1.5 rotate-45 bg-red-600"></div>
+              <div class="h-px flex-1 bg-gradient-to-l from-transparent to-white/10"></div>
+          </div>
+        </div>
+      
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+      </div>
+    
+    <div class="w-300 m-auto">
+        {% block content %}{% endblock %}
+    </div>
+
+
+    <footer class="bg-[#0a0a0a] text-gray-400 py-16 px-6 mt-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                
+                <div class="space-y-4">
+                    <h2 class="text-white text-2xl font-black tracking-tighter italic uppercase">
+                        CARBONCRAFT <span class="text-red-600">STUDIO</span>
+                    </h2>
+                    <p class="text-sm leading-relaxed max-w-xs">
+                        Software-grade precision for automotive excellence. Defining the future of car care in Lahore.
+                    </p>
+                    <p class="text-sm leading-relaxed max-w-xs">
+                        contact us: 03XX-XXXXXXX
+                    </p>
+                    <p class="text-sm leading-relaxed max-w-xs">
+                        Email: carboncraft4@gmail.com
+                    </p>
+                </div>
+    
+                <div>
+                    <h3 class="text-white font-bold uppercase tracking-widest text-xs mb-6">Explore</h3>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="{% url 'home' %}" class="hover:text-red-600 transition-colors">Home</a></li>
+                        <li><a href="{% url 'productlist' %}" class="hover:text-red-600 transition-colors">Shop Supply</a></li>
+                        <li><a href="{% url 'services' %}" class="hover:text-red-600 transition-colors">Studio Services</a></li>
+                    </ul>
+                </div>
+    
+                <div>
+                    <h3 class="text-white font-bold uppercase tracking-widest text-xs mb-6">Connect</h3>
+                    <div class="flex gap-4">
+                        <a target="_blank" href="https://www.instagram.com/carboncraft__studio/" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 hover:bg-red-600 hover:border-red-600 transition-all duration-300 group">
+                            <svg class="w-5 h-5 fill-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+    
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 hover:bg-red-600 hover:border-red-600 transition-all duration-300 group">
+                            <svg class="w-5 h-5 fill-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="m24,0H0v24h24V0Zm-10.594,21.098v-6.445h2.15l.409-2.666h-2.558v-1.73c0-.729.357-1.441,1.503-1.441h1.163v-2.27s-1.056-.18-2.065-.18c-2.107,0-3.484,1.277-3.484,3.589v2.032h-2.342v2.666h2.342v6.445c-4.41-.692-7.782-4.508-7.782-9.112C2.741,6.892,6.871,2.762,11.965,2.762s9.224,4.13,9.224,9.224c0,4.604-3.373,8.42-7.782,9.112Z"/></svg>
+                        </a>
+    
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 hover:bg-red-600 hover:border-red-600 transition-all duration-300 group">
+                            <svg class="w-5 h-5 fill-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="m12,0C5.373,0,0,5.373,0,12c0,6.627,5.373,12,12,12h0c6.627,0,12-5.373,12-12h0C24,5.373,18.627,0,12,0Zm7.037,18.056c-.008.578-.483,1.042-1.062,1.034H5.76c-.577.006-1.051-.457-1.058-1.034V5.79c.007-.577.48-1.04,1.058-1.033h12.215c.578-.009,1.053.454,1.062,1.032v12.267Zm1.65,1.136c-.54.005-.982-.428-.987-.968-.005-.539.428-.981.968-.987h.019c.532.005.963.436.968.968.005.539-.428.981-.968.987Zm-6.32-9.232c-.823-.03-1.596.394-2.012,1.105h-.028v-.935h-2.039v6.84h2.124v-3.383c0-.893.169-1.756,1.276-1.756,1.09,0,1.104,1.021,1.104,1.814v3.326h2.124v-3.752c0-1.843-.396-3.258-2.549-3.258h0Zm-7.54,7.01h2.126v-6.84h-2.126v6.84Zm1.064-10.24c-.681,0-1.233.552-1.233,1.233,0,.681.552,1.232,1.233,1.232s1.233-.552,1.233-1.233c0-.681-.552-1.233-1.233-1.232Z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-widest">
+                <p>&copy; 2025-2026 CarbonCraft Studio. All Rights Reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Hide navbar on scroll down, show on scroll up
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.style.transform = 'translateY(-150%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Prevent negative scrolling errors
+        });
+    </script>
+</body>
+</html>

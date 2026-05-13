@@ -1,0 +1,444 @@
+{% load static tailwind_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>carboncraft ADMIN</title>
+  {% tailwind_css %}
+  <style>
+    /* Standard CSS to hide scrollbars */
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Smooth transition for mobile sidebar */
+    #mobile-sidebar { transition: transform 0.3s ease-in-out; }
+
+    /* Active Nav Styling */
+    .nav-link-active {
+        background: linear-gradient(to right, rgba(220, 38, 38, 0.15), transparent) !important;
+        border-color: rgba(220, 38, 38, 0.3) !important;
+    }
+    .nav-link-active .icon-box {
+        background-color: #dc2626 !important;
+        color: white !important;
+        box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
+    }
+    .nav-link-active .nav-label {
+        color: white !important;
+    }
+    .nav-link-active .nav-sub-label {
+        color: rgba(220, 38, 38, 0.9) !important;
+    }
+    .nav-link-active .active-bar {
+        display: block !important;
+    }
+  </style>
+</head>
+<body class="hide-scrollbar bg-[#0a0a0a]">
+  
+<div class="min-h-screen text-neutral-300 font-sans selection:bg-red-500/30">
+    
+  <div class="lg:hidden flex items-center justify-between p-4 bg-neutral-900/80 backdrop-blur-xl border-b border-neutral-800 sticky top-0 z-[60]">
+      <h2 class="text-lg font-black text-white italic uppercase tracking-tighter">Carbon <span class="text-red-600">Craft</span></h2>
+      <button id="menu-toggle" class="p-2 text-white bg-neutral-800 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+      </button>
+  </div>
+
+  <aside id="mobile-sidebar" class="fixed left-0 top-0 h-full w-64 bg-neutral-900 lg:bg-neutral-900/50 border-r border-neutral-800 flex flex-col p-6 z-[70] backdrop-blur-xl -translate-x-full lg:translate-x-0 transition-transform duration-300">
+      <button id="menu-close" class="lg:hidden absolute right-4 top-6 text-neutral-500">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="mb-10">
+          <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">Carbon <span class="text-red-600">Craft</span></h2>
+          <p class="text-[10px] text-neutral-500 font-bold tracking-[0.2em]">ADMIN PORTAL</p>
+      </div>
+
+      <nav id="admin-nav" class="space-y-4 flex-1">
+        <div class="px-4 mb-2">
+          <span class="text-[9px] font-black text-neutral-600 uppercase tracking-[0.4em]">Core Protocols</span>
+        </div>
+      
+        <!-- Orders -->
+        <a href="#orders-section" class="mobile-nav-link nav-link-active relative group flex items-center gap-4 px-4 py-3.5 rounded-2xl border border-white/5 transition-all duration-300">
+          <div class="active-bar hidden absolute left-0 top-1/4 bottom-1/4 w-1 bg-red-600 rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]"></div>
+          <div class="icon-box flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-800 text-neutral-500 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="nav-label text-xs font-black text-neutral-400 uppercase italic tracking-wider transition-colors">Live_Orders</span>
+            <span class="nav-sub-label text-[8px] font-bold text-neutral-600 uppercase tracking-tighter">System Active</span>
+          </div>
+        </a>
+      
+        <!-- Logistics -->
+        <a href="#appointments-section" class="mobile-nav-link relative group flex items-center gap-4 px-4 py-3.5 rounded-2xl border border-white/5 hover:bg-white/[0.02] transition-all duration-300">
+          <div class="active-bar hidden absolute left-0 top-1/4 bottom-1/4 w-1 bg-red-600 rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]"></div>
+          <div class="icon-box flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-800 text-neutral-500 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="nav-label text-xs font-black text-neutral-400 uppercase italic tracking-wider transition-colors">Logistics</span>
+            <span class="nav-sub-label text-[8px] font-bold text-neutral-600 uppercase tracking-tighter">Schedule Sync</span>
+          </div>
+        </a>
+      
+        <!-- Inventory -->
+        <a href="#inventory-section" class="mobile-nav-link relative group flex items-center gap-4 px-4 py-3.5 rounded-2xl border border-white/5 hover:bg-white/[0.02] transition-all duration-300">
+          <div class="active-bar hidden absolute left-0 top-1/4 bottom-1/4 w-1 bg-red-600 rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]"></div>
+          <div class="icon-box flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-800 text-neutral-500 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="nav-label text-xs font-black text-neutral-400 uppercase italic tracking-wider transition-colors">Asset_Stock</span>
+            <span class="nav-sub-label text-[8px] font-bold text-neutral-600 uppercase tracking-tighter">Unit Tracking</span>
+          </div>
+        </a>
+
+        <!-- Services -->
+        <a href="#catalog-section" class="mobile-nav-link relative group flex items-center gap-4 px-4 py-3.5 rounded-2xl border border-white/5 hover:bg-white/[0.02] transition-all duration-300">
+          <div class="active-bar hidden absolute left-0 top-1/4 bottom-1/4 w-1 bg-red-600 rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]"></div>
+          <div class="icon-box flex items-center justify-center w-8 h-8 rounded-lg bg-neutral-800 text-neutral-500 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="nav-label text-xs font-black text-neutral-400 uppercase italic tracking-wider transition-colors">Services</span>
+            <span class="nav-sub-label text-[8px] font-bold text-neutral-600 uppercase tracking-tighter">Service Matrix</span>
+          </div>
+        </a>
+      </nav>
+
+      <div class="pt-6 border-t border-neutral-800">
+        <a href="{% url 'home' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-neutral-400 hover:text-white transition-all">
+          <button class="w-full text-left text-xs font-bold uppercase tracking-widest">Logout Session</button>
+        </a>
+      </div>
+  </aside>
+
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-[65] hidden lg:hidden"></div>
+
+  <main class="lg:ml-64 p-4 sm:p-8 lg:p-12 transition-all">
+      
+      <header class="flex flex-col lg:flex-row lg:items-center justify-between mb-12 gap-6">
+          <div class="space-y-1">
+              <div class="flex items-center gap-3">
+                <span class="px-2 py-0.5 bg-red-600/10 border border-red-600/20 rounded text-[9px] font-bold text-red-600 uppercase tracking-widest">Admin Authorization Active</span>
+              </div>
+              <h1 class="text-4xl lg:text-5xl font-black tracking-tighter text-white uppercase italic">Command <span class="text-red-600">Center</span></h1>
+              <p class="text-neutral-500 font-medium text-sm">Real-time Operational Intelligence</p>
+          </div>
+          
+          <div class="flex flex-wrap items-center gap-4">
+              <div class="hidden sm:block text-right mr-4 border-r border-neutral-800 pr-4">
+                  <p class="text-[10px] font-black text-neutral-600 uppercase tracking-widest">System Status</p>
+                  <p class="text-xs font-bold text-green-500 flex items-center justify-end gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Online
+                  </p>
+              </div>
+              <div class="flex gap-2 w-full sm:w-auto">
+                <a href="{% url 'add_product' %}" class="flex-1 sm:flex-none flex items-center justify-center gap-3 bg-red-600 text-white px-5 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all hover:bg-red-700 active:scale-95 shadow-lg shadow-red-600/20">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                    Add Asset
+                </a>
+                <a href="{% url 'add_service' %}" class="flex-1 sm:flex-none flex items-center justify-center gap-3 bg-white/5 border border-white/10 text-white px-5 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all hover:bg-white/10 active:scale-95">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    Add Service
+                </a>
+            </div>
+          </div>
+      </header>
+
+      <!-- Stats Grid -->
+      <!-- Financial Matrix -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-red-600/5 border border-red-600/20 p-8 rounded-[2rem] relative overflow-hidden group">
+              <div class="absolute top-0 right-0 p-4 opacity-10">
+                  <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </div>
+              <p class="text-[10px] font-black text-red-600 uppercase tracking-[0.3em] mb-2">Order Revenue</p>
+              <h3 class="text-4xl font-black text-white italic tracking-tighter">Rs. {{ order_revenue }}</h3>
+              <div class="mt-4 h-1 w-12 bg-red-600 rounded-full"></div>
+          </div>
+
+          <div class="bg-blue-600/5 border border-blue-600/20 p-8 rounded-[2rem] relative overflow-hidden group">
+              <div class="absolute top-0 right-0 p-4 opacity-10">
+                  <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] mb-2">Service Revenue</p>
+              <h3 class="text-4xl font-black text-white italic tracking-tighter">Rs. {{ service_revenue }}</h3>
+              <div class="mt-4 h-1 w-12 bg-blue-600 rounded-full"></div>
+          </div>
+
+          <div class="bg-green-600/5 border border-green-600/20 p-8 rounded-[2rem] relative overflow-hidden group shadow-[0_0_50px_rgba(34,197,94,0.05)]">
+              <div class="absolute top-0 right-0 p-4 opacity-10">
+                  <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <p class="text-[10px] font-black text-green-600 uppercase tracking-[0.3em] mb-2">Net Valuation</p>
+              <h3 class="text-4xl font-black text-white italic tracking-tighter">Rs. {{ total_revenue }}</h3>
+              <div class="mt-4 h-1 w-12 bg-green-600 rounded-full shadow-[0_0_10px_rgba(34,197,94,1)] animate-pulse"></div>
+          </div>
+      </div>
+
+      <!-- Operational Metrics -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div class="bg-neutral-900/40 border border-neutral-800 p-6 rounded-3xl group hover:border-red-600/30 transition-all">
+              <div class="flex justify-between items-start mb-4">
+                  <div class="p-3 bg-red-600/10 rounded-2xl text-red-600">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                  </div>
+                  <span class="text-[10px] font-black text-neutral-600 uppercase tracking-widest">Active Orders</span>
+              </div>
+              <h3 class="text-3xl font-black text-white italic tracking-tighter">{{ all_orders|length }}</h3>
+              <p class="text-[10px] text-neutral-500 font-bold mt-1 uppercase tracking-widest">Global Unit Count</p>
+          </div>
+
+          <div class="bg-neutral-900/40 border border-neutral-800 p-6 rounded-3xl group hover:border-blue-600/30 transition-all">
+              <div class="flex justify-between items-start mb-4">
+                  <div class="p-3 bg-blue-600/10 rounded-2xl text-blue-600">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  </div>
+                  <span class="text-[10px] font-black text-neutral-600 uppercase tracking-widest">Logistics Queue</span>
+              </div>
+              <h3 class="text-3xl font-black text-white italic tracking-tighter">{{ all_bookings|length }}</h3>
+              <p class="text-[10px] text-neutral-500 font-bold mt-1 uppercase tracking-widest">Pending Services</p>
+          </div>
+
+          <div class="bg-neutral-900/40 border border-neutral-800 p-6 rounded-3xl group hover:border-green-600/30 transition-all">
+              <div class="flex justify-between items-start mb-4">
+                  <div class="p-3 bg-green-600/10 rounded-2xl text-green-600">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                  </div>
+                  <span class="text-[10px] font-black text-neutral-600 uppercase tracking-widest">Inventory Vault</span>
+              </div>
+              <h3 class="text-3xl font-black text-white italic tracking-tighter">{{ all_products|length }}</h3>
+              <p class="text-[10px] text-neutral-500 font-bold mt-1 uppercase tracking-widest">Stocked Assets</p>
+          </div>
+      </div>
+
+      <section id="orders-section" class="mb-20">
+          <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl sm:text-2xl font-black text-white italic uppercase tracking-tight">Live <span class="text-red-600">Orders</span></h2>
+              <span class="bg-neutral-900 border border-neutral-800 px-3 py-1 rounded-full text-[10px] font-bold text-neutral-500 uppercase">{{ all_orders|length }} Units</span>
+          </div>
+          
+          <div class="relative rounded-3xl border border-neutral-800 bg-neutral-900/40 backdrop-blur-xl overflow-hidden">
+              <div class="overflow-x-auto scrollbar-hide">
+                  <table class="min-w-[700px] w-full text-left">
+                      <thead class="bg-neutral-800/30 border-b border-neutral-800/50">
+                          <tr>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Client</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Product</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Qty</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Revenue</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500 text-right">Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody class="divide-y divide-neutral-800/50">
+                          {% for order in all_orders %}
+                          <tr class="hover:bg-red-600/[0.02] transition-colors group">
+                              <td class="px-8 py-6">
+                                  <div class="text-sm font-bold text-white">{{ order.first_name }} {{ order.last_name }}</div>
+                                  <div class="text-[11px] text-neutral-500 uppercase">{{order.address}}</div>
+                              </td>
+                              <td class="px-8 py-6">
+                                  <span class="text-xs font-bold text-neutral-300">{{ order.product.name|default:order.product }}</span>
+                              </td>
+                              <td class="px-8 py-6">
+                                  <span class="text-xs font-bold text-neutral-300">x{{ order.quantity }}</span>
+                              </td>
+                              <td class="px-8 py-6">
+                                  <div class="text-sm font-black text-white">Rs. {{ order.total_price }}</div>
+                              </td>
+                              <td class="px-8 py-6 text-right">
+                                 <a href="{% url 'order_detail' order.pk%}"> <button class="text-[10px] font-black text-neutral-500 hover:text-white uppercase tracking-tighter border border-neutral-800 px-3 py-1 rounded-lg transition-all">View Details</button></a>
+                              </td>
+                          </tr>
+                          {% empty %}
+                          <tr><td colspan="4" class="py-20 text-center text-neutral-600 text-xs uppercase tracking-widest font-bold">Hangar Empty</td></tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </section>
+
+      <section id="appointments-section" class="mb-20">
+          <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl sm:text-2xl font-black text-white italic uppercase tracking-tight">Service <span class="text-red-600">Appointments</span></h2>
+          </div>
+          <div class="relative rounded-3xl border border-neutral-800 bg-neutral-900/40 overflow-hidden">
+              <div class="overflow-x-auto">
+                  <table class="min-w-[700px] w-full text-left">
+                      <thead class="bg-neutral-800/30 border-b border-neutral-800/50">
+                          <tr>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Customer</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Asset</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Schedule</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500 text-right">Status</th>
+                          </tr>
+                      </thead>
+                      <tbody class="divide-y divide-neutral-800/50">
+                          {% for booking in all_bookings %}
+                          <tr class="hover:bg-white/[0.02] transition-colors">
+                              <td class="px-8 py-6 text-sm font-bold text-white">{{ booking.first_name }} {{ booking.last_name }}</td>
+                              <td class="px-8 py-6 text-xs text-neutral-300 font-bold uppercase">{{ booking.service.service_name }}</td>
+                              <td class="px-8 py-6">
+                                  <div class="text-xs text-white">{{ booking.booking_date }}</div>
+                                  <div class="text-[10px] text-red-600 font-black uppercase">{{ booking.booking_time }}</div>
+                              </td>
+                              <td class="px-8 py-6 text-right space-x-2">
+                                  <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border border-neutral-700 bg-neutral-800/50 inline-block align-middle">
+                                      {{ booking.get_status_display }}
+                                  </span>
+                                  <a href="{% url 'booking_detail' booking.pk%}" class="inline-block align-middle"><button class="text-[10px] font-black text-neutral-500 hover:text-white uppercase tracking-tighter border border-neutral-800 px-3 py-1 rounded-lg transition-all">View Details</button></a>
+                              </td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </section>
+
+      <section id="inventory-section" class="mb-20">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 border-l-2 border-red-600 pl-6">
+          <div>
+              <div class="flex items-center gap-2 mb-1">
+                  <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                  <span class="text-[9px] font-mono text-neutral-500 uppercase tracking-[0.3em]">Storage_Vault // Beta</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tighter leading-none">
+                  Inventory <span class="text-red-600" style="-webkit-text-stroke: 1px rgba(220,38,38,1);">Stock</span>
+              </h2>
+          </div>
+      
+          <a href="{% url 'productlist' %}" class="group relative overflow-hidden flex items-center gap-3 bg-neutral-900 border border-white/5 hover:border-red-600/50 px-6 py-3.5 rounded-2xl transition-all duration-500 shadow-2xl shadow-black">
+              <div class="absolute inset-0 bg-red-600/0 group-hover:bg-red-600/5 transition-colors"></div>
+              
+              <div class="flex flex-col items-start">
+                  <span class="text-[10px] font-black text-white uppercase tracking-[0.2em] group-hover:text-red-500 transition-colors">Inventory</span>
+                  <span class="text-[8px] font-bold text-neutral-600 uppercase tracking-tighter">View Full Inventory</span>
+              </div>
+      
+              <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-white/5 border border-white/10 text-white group-hover:bg-red-600 group-hover:border-red-600 transition-all">
+                  <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+              </div>
+          </a>
+      </div>
+          <div class="relative rounded-3xl border border-neutral-800 bg-neutral-900/40 overflow-hidden">
+              <div class="overflow-x-auto">
+                  <table class="min-w-[600px] w-full text-left">
+                      <thead class="bg-neutral-800/30 border-b border-neutral-800/50">
+                          <tr>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Asset Name</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500">Price</th>
+                              <th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-neutral-500 text-right">Management</th>
+                          </tr>
+                      </thead>
+                      <tbody class="divide-y divide-neutral-800/50">
+                          {% for product in all_products %}
+                          <tr class="hover:bg-white/[0.02] transition-colors">
+                              <td class="px-8 py-6 flex items-center gap-4">
+                                  {% if product.photo %}
+                                  <img src="{{ product.photo.url }}" class="h-10 w-10 rounded-lg object-cover border border-neutral-800">
+                                  {% endif %}
+                                  <div>
+                                      <div class="text-sm font-bold text-white">{{ product.product }}</div>
+                                      <div class="text-[10px] text-neutral-500 uppercase">{{ product.get_type_display }}</div>
+                                  </div>
+                              </td>
+                              <td class="px-8 py-6 text-sm font-black text-white">Rs. {{ product.price }}</td>
+                              <td class="px-8 py-6 text-right space-x-4">
+                                  <a href="{% url 'edit_product' product.pk %}" class="text-[10px] font-black text-blue-500 uppercase">Edit</a>
+                                  <a href="{% url 'delete_product' product.pk %}" class="text-[10px] font-black text-red-600 uppercase">Delete</a>
+                              </td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </section>
+
+      <section id="catalog-section">
+        <h2 class="text-xl sm:text-2xl font-black text-white italic uppercase tracking-tight mb-6">Ser<span class="text-red-600">vices</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {% for service in all_services %}
+            <div class="bg-neutral-900/40 border border-neutral-800 rounded-3xl p-6 hover:border-red-600/30 transition-all group">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-[9px] font-black text-red-600 uppercase tracking-widest bg-red-600/5 px-2 py-0.5 rounded">Active</span>
+                    <div class="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <a href="{% url 'edit_service' service.pk %}" class="text-neutral-500 hover:text-blue-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2"/></svg>
+                        </a>
+                        <a href="{% url 'delete_service' service.pk %}" 
+                             onclick="return confirm('Confirm Service Termination...')"
+                             class="text-neutral-500 hover:text-red-500 transition-colors">
+                              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                              </svg>
+                          </a>
+                    </div>
+                </div>
+                <h3 class="text-lg font-black text-white uppercase italic mb-2">{{ service.service_name }}</h3>
+                <p class="text-xs text-neutral-500 line-clamp-2 mb-6 text-balance">{{ service.description|default:"Standard detailing protocol." }}</p>
+                <div class="flex items-center justify-between pt-4 border-t border-neutral-800">
+                    <span class="text-sm font-black text-white">Rs. {{ service.price }}</span>
+                    <span class="text-[10px] text-neutral-600 font-bold uppercase">Base Rate</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const sidebar = document.getElementById('mobile-sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const toggle = document.getElementById('menu-toggle');
+  const close = document.getElementById('menu-close');
+
+  function toggleSidebar() {
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+  }
+
+  toggle.addEventListener('click', toggleSidebar);
+  close.addEventListener('click', toggleSidebar);
+  overlay.addEventListener('click', toggleSidebar);
+
+  // Navbar Active State Logic
+  const navLinks = document.querySelectorAll('.mobile-nav-link');
+  navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+          navLinks.forEach(l => l.classList.remove('nav-link-active'));
+          link.classList.add('nav-link-active');
+          if (window.innerWidth < 1024) toggleSidebar();
+      });
+  });
+
+  // Smooth Scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+          }
+      });
+  });
+</script>
+
+</body>
+</html>

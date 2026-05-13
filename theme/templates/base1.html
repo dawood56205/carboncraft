@@ -1,0 +1,25 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CARBONCRAFT STUDIO </title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+    
+    {% tailwind_css %}
+    
+    <style>
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    </style>
+</head>
+
+<body class="hide-scrollbar bg-black text-black font-sans leading-normal tracking-normal">
+    {% block content %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,68 @@
+{% extends "base1.html" %}
+
+{% block content %}
+<div class="min-h-screen bg-[#0a0a0a] py-12 px-4 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-neutral-900 via-[#0a0a0a] to-[#0a0a0a]">
+    <div class="max-w-3xl mx-auto">
+        
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-black text-white italic uppercase tracking-tighter">Register <span class="text-red-600">New Service</span></h1>
+            <p class="text-neutral-500 text-sm mt-2 font-medium">Expand the Carbon Craft Studio detailing catalog.</p>
+        </div>
+
+        <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-b from-red-600/20 to-transparent rounded-[2.5rem] blur-xl opacity-50"></div>
+            
+            <div class="relative bg-neutral-900/80 border border-neutral-800 backdrop-blur-2xl rounded-[2rem] p-8 md:p-12 shadow-2xl">
+                <form method="POST" class="space-y-8">
+                    {% csrf_token %}
+                    
+                    <div>
+                        <label class="block text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-3 ml-1">Package Designation</label>
+                        <input type="text" name="service_name" required
+                            placeholder="e.g., Ceramic Pro Stealth"
+                            class="w-full bg-black/50 border border-neutral-800 rounded-2xl px-6 py-4 text-white placeholder:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-red-600 transition-all font-bold">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-3 ml-1">Base Rate (Rs.)</label>
+                            <div class="relative">
+                                <span class="absolute left-6 top-1/2 -translate-y-1/2 text-red-600 font-black">Rs.</span>
+                                <input type="text" name="price" required
+                                    placeholder="0.00"
+                                    class="w-full bg-black/50 border border-neutral-800 rounded-2xl pl-16 pr-6 py-4 text-white focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-red-600 transition-all font-mono font-bold">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-3 ml-1">Status</label>
+                            <div class="flex items-center h-[58px] bg-black/50 border border-neutral-800 rounded-2xl px-6">
+                                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse mr-3"></span>
+                                <span class="text-xs font-bold text-neutral-300 uppercase tracking-widest">Active on Catalog</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-3 ml-1">Service Protocols & Details</label>
+                        <textarea name="description" rows="5"
+                            placeholder="Detail the steps, chemical assets used, and expected results..."
+                            class="w-full bg-black/50 border border-neutral-800 rounded-2xl px-6 py-4 text-white placeholder:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-red-600/50 focus:border-red-600 transition-all text-sm leading-relaxed"></textarea>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4 pt-4">
+                        <button type="submit" 
+                            class="flex-1 bg-red-600 hover:bg-red-500 text-white font-black py-5 rounded-2xl uppercase text-xs tracking-[0.2em] transition-all shadow-[0_0_30px_rgba(220,38,38,0.2)] active:scale-[0.98]">
+                            Deploy Service
+                        </button>
+                        <a href="{% url 'admin_dashboard' %}" 
+                            class="flex-1 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 font-black py-5 rounded-2xl uppercase text-xs tracking-[0.2em] transition-all text-center">
+                            Abort
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
