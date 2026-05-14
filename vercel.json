@@ -8,7 +8,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "carboncraftstudio/wsgi.py"
+      "dest": "api/index.py"
     }
   ]
 }
