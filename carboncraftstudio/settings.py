@@ -169,5 +169,7 @@ from django.core.exceptions import PermissionDenied
 RAISE_EXCEPTION = True
 
 
-print(f"--- API KEY LOADED: {GROQ_API_KEY[:10]}... ---")
-GEMINI_API_KEY="AIzaSyA7l8aTJyWJno-ccWjB9YcYYs-hy2XXGKU"
+if GROQ_API_KEY:
+    print(f"--- API KEY LOADED: {GROQ_API_KEY[:10]}... ---")
+else:
+    print("--- API KEY NOT FOUND ---")
