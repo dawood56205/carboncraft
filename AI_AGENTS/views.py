@@ -2,9 +2,6 @@ import os
 import re
 from django.shortcuts import render
 from groq import Groq
-from decouple import config
-
-GROQ_API_KEY = config("GROQ_API_KEY")
 
 
 
@@ -129,6 +126,7 @@ def car_specs_view(request):
             specs_result = formatted.replace('* ', '<span class="text-blue-500 mr-2">▶</span> ').replace('\n', '<br>')
         except Exception as e:
             specs_result = f"Error fetching specs: {str(e)}"
+    return render(request, 'car_specs.html', {'result': specs_result})
 
 def car_comparison_view(request):
     ai_response = None
