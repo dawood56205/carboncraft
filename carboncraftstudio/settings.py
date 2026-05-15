@@ -167,6 +167,7 @@ from django.core.exceptions import PermissionDenied
 # This ensures that if a user fails a Mixin test, they get a 403 
 # instead of a weird redirect loop.
 RAISE_EXCEPTION = True
+CART_SESSION_ID = 'cart'
 
 if GROQ_API_KEY:
     print(f"--- API KEY LOADED: {GROQ_API_KEY[:10]}... ---")

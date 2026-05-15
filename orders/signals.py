@@ -75,7 +75,8 @@ def send_order_alert(sender, instance, created, **kwargs):
             f"Category: {instance.product.type}",
             f"Phone: {instance.phone}",
             f"Address: {instance.address}",
-            f"City: {instance.city}"
+            f"City: {instance.city}",
+            f"Quantity :{instance.quantity}"
         ]
         
         p.setFillColor(colors.black)
