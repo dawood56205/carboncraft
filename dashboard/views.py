@@ -9,10 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
 from services.models import Service
-
-
-
-
+from django.core.mail import send_mail
+from django.contrib import messages
 class AdminDashboardView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Order
     template_name = 'admin_home.html'
@@ -169,4 +167,37 @@ def booking_detail_view(request, pk):
     Fetches a single service booking for the dossier/receipt view.
     """
     booking = get_object_or_404(ServiceBooking, pk=pk)
+    
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        new_date = request.POST.get('booking_date')
+        new_time = request.POST.get('booking_time')
+        
+        status_changed = (new_status != booking.status)
+        
+        if new_status:
+            booking.status = new_status
+        if new_date:
+            booking.booking_date = new_date
+        if new_time:
+            booking.booking_time = new_time
+            
+        booking.save()
+        
+        if status_changed:
+            if booking.status == 'confirmed':
+                subject = f"Booking Confirmed - CarbonCraft Studio"
+                message = f"Hello {booking.first_name},\n\nYour booking for {booking.service.service_name} has been confirmed for {booking.booking_date} at {booking.booking_time}.\n\nThank you for choosing CarbonCraft Studio!"
+                send_mail(subject, message, 'carboncraftstudio4@gmail.com', [booking.email], fail_silently=True)
+                messages.success(request, f"Booking Confirmed. Email sent to {booking.email}.")
+            elif booking.status == 'cancelled':
+                subject = f"Booking Cancelled - CarbonCraft Studio"
+                message = f"Hello {booking.first_name},\n\nWe regret to inform you that your booking for {booking.service.service_name} on {booking.booking_date} has been cancelled. Please contact us for more information.\n\nCarbonCraft Studio."
+                send_mail(subject, message, 'carboncraftstudio4@gmail.com', [booking.email], fail_silently=True)
+                messages.success(request, f"Booking Cancelled. Email sent to {booking.email}.")
+        else:
+            messages.success(request, "Booking updated successfully.")
+            
+        return redirect('booking_detail', pk=booking.pk)
+
     return render(request, 'booking_det.html', {'booking': booking})
