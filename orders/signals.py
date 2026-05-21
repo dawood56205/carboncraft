@@ -7,7 +7,7 @@ from reportlab.lib import colors
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail, EmailMessage
-from .models import Order
+from orders.models import Order
 
 @receiver(post_save, sender=Order)
 def send_order_alert(sender, instance, created, **kwargs):

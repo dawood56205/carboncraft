@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'dashboard',
     'AI_AGENTS',
     
+    
+    
 ]
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = ['127.0.0.1']

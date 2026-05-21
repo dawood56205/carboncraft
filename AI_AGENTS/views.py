@@ -27,7 +27,8 @@ def ai_consultant_view(request):
                             "Format your response formally and professionally. "
                             "Use clear, capitalized headings. Use bullet points for specific modifications. "
                             "Provide a 'Final Summary' at the end. Do not use bold markdown symbols like **. "
-                            "Focus strictly on prices in PKR and part availability in the Lahore market."
+                            "Focus strictly on prices in PKR and part availability in the Lahore market. "
+                            "CRITICAL RULE: If the user's input contains unusual symbols, gibberish, or is not related to cars/automotive topics, you MUST reject the prompt and reply exactly with: 'Error: I am a CarbonCraft intelligence. Please ask me about cars.' Do not provide any other information in this case."
                         )
                     },
                     {
@@ -72,7 +73,8 @@ def ai_consultant_view2(request):
                             "Provide two distinct sections: 1) NEW CAR OPTIONS (Zero Meter) "
                             "and 2) USED CAR OPTIONS (Market Favorites). "
                             "Consider resale value, maintenance costs in Lahore/Karachi, and fuel average. "
-                            "Do not use bold symbols (**). Use clear headings."
+                            "Do not use bold symbols (**). Use clear headings. "
+                            "CRITICAL RULE: If the user's input contains unusual symbols, gibberish, or is not related to cars/automotive topics, you MUST reject the prompt and reply exactly with: 'Error: I am a CarbonCraft intelligence. Please ask me about cars.' Do not provide any other information in this case."
                         )
                     },
                     {
@@ -111,7 +113,8 @@ def car_specs_view(request):
                             "(e.g., 'fuel average', 'engine CC', 'torque'), provide that specific information prominently. "
                             "If the user only provides a car name, return a formal technical specification sheet. "
                             "Always include the relevant Pakistani market variant details. "
-                            "Use clear headers for sections. Do not use bold markdown symbols (**)."
+                            "Use clear headers for sections. Do not use bold markdown symbols (**). "
+                            "CRITICAL RULE: If the user's input contains unusual symbols, gibberish, or is not related to cars/automotive topics, you MUST reject the prompt and reply exactly with: 'Error: I am a CarbonCraft intelligence. Please ask me about cars.' Do not provide any other information in this case."
                         )
                     },
                     {
@@ -126,8 +129,9 @@ def car_specs_view(request):
             specs_result = formatted.replace('* ', '<span class="text-blue-500 mr-2">▶</span> ').replace('\n', '<br>')
         except Exception as e:
             specs_result = f"Error fetching specs: {str(e)}"
-    return render(request, 'car_specs.html', {'result': specs_result})
+    return render(request, 'car_specs.html', {'specs': specs_result})
 
+    
 def car_comparison_view(request):
     ai_response = None
     if request.method == "POST":
@@ -147,7 +151,8 @@ def car_comparison_view(request):
                             "Table Columns: Metric, " + car1 + ", " + car2 + ". "
                             "Metrics to include: Engine/CC, Horsepower, Fuel Average, Resale Value, Parts Availability. "
                             "Do not use any asterisks (*) or bold symbols (**) in the entire response. "
-                            "After the table, provide a short 'VERDICT' section in a separate paragraph."
+                            "After the table, provide a short 'VERDICT' section in a separate paragraph. "
+                            "CRITICAL RULE: If the user's input contains unusual symbols, gibberish, or is not related to cars/automotive topics, you MUST reject the prompt and reply exactly with: 'Error: I am a CarbonCraft intelligence. Please ask me about cars.' Do not provide any other information in this case."
                         )
                     },
                     {
@@ -193,7 +198,8 @@ def diagnose(request):
         system_msg = (
             "You are the Carbon Craft AI Diagnostic Sentinel. Provide a professional mechanical analysis. "
             "Format your response with clear headings using **bold symbols**. "
-            "Use bullet points for lists. Provide a professional summary."
+            "Use bullet points for lists. Provide a professional summary. "
+            "CRITICAL RULE: If the user's input contains unusual symbols, gibberish, or is not related to cars/automotive topics, you MUST reject the prompt and reply exactly with: 'Error: I am a CarbonCraft intelligence. Please ask me about cars.' Do not provide any other information in this case."
         )
         
         user_msg = f"Vehicle: {car_model}. Reported Symptoms: {problem}."
