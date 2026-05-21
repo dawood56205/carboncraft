@@ -192,7 +192,9 @@ from django.core.exceptions import PermissionDenied
 RAISE_EXCEPTION = True
 CART_SESSION_ID = 'cart'
 
+import sys
 if GROQ_API_KEY:
-    print(f"--- API KEY LOADED: {GROQ_API_KEY[:10]}... ---")
+    sys.stderr.write(f"--- API KEY LOADED: {GROQ_API_KEY[:10]}... ---\n")
 else:
-    print("--- API KEY NOT FOUND ---")
+    sys.stderr.write("--- API KEY NOT FOUND ---\n")
+
