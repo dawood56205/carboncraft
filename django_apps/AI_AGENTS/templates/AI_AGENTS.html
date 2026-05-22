@@ -1,0 +1,236 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}AI Command Center{% endblock %}
+
+{% block navbar_classes %}bg-blue-900 border-2 border-white/20 shadow-[0_25px_60px_-15px_rgba(30,58,138,0.5)] bg-gradient-to-b from-blue-800 to-blue-900{% endblock %}
+{% block footer_text_accent %}text-blue-600{% endblock %}
+{% block footer_hover_text %}hover:text-blue-600{% endblock %}
+{% block footer_social_hover %}hover:bg-blue-600 hover:border-blue-600{% endblock %}
+
+{% block content %}
+
+<!-- AI Bot Loading Style -->
+<div id="page-loader" class="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out">
+    
+    <div class="relative flex flex-col items-center">
+        <!-- Background Glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-blue-600/20 blur-[40px] rounded-full animate-pulse"></div>
+        
+        <!-- The Bot Face -->
+        <div class="relative w-28 h-28 bg-[#0a0a0a] border-2 border-blue-500 rounded-3xl flex flex-col items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.4)] z-10">
+            <!-- Antenna -->
+            <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-1 h-6 bg-blue-600"></div>
+            <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-400 rounded-full animate-ping"></div>
+            <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_15px_rgba(96,165,250,1)]"></div>
+
+            <!-- Eyes -->
+            <div class="flex gap-5 mb-2">
+                <!-- Left Eye -->
+                <div class="w-7 h-7 border-2 border-blue-500 rounded-full flex items-center justify-center bg-blue-900/30 overflow-hidden relative">
+                    <div class="absolute w-full h-[2px] bg-blue-400 top-1/2 -translate-y-1/2 animate-pulse"></div>
+                    <div class="w-2.5 h-2.5 bg-blue-300 rounded-full animate-pulse shadow-[0_0_15px_rgba(96,165,250,1)]"></div>
+                </div>
+                <!-- Right Eye -->
+                <div class="w-7 h-7 border-2 border-blue-500 rounded-full flex items-center justify-center bg-blue-900/30 overflow-hidden relative">
+                    <div class="absolute w-full h-[2px] bg-blue-400 top-1/2 -translate-y-1/2 animate-pulse [animation-delay:0.2s]"></div>
+                    <div class="w-2.5 h-2.5 bg-blue-300 rounded-full animate-pulse shadow-[0_0_15px_rgba(96,165,250,1)] [animation-delay:0.2s]"></div>
+                </div>
+            </div>
+            
+            <!-- Voice/Mouth Equalizer -->
+            <div class="flex gap-1.5 items-center h-4 mt-3">
+                <div class="w-1.5 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <div class="w-1.5 h-3 bg-blue-500 rounded-full animate-pulse [animation-delay:0.1s]"></div>
+                <div class="w-1.5 h-4 bg-blue-500 rounded-full animate-pulse [animation-delay:0.2s]"></div>
+                <div class="w-1.5 h-3 bg-blue-500 rounded-full animate-pulse [animation-delay:0.3s]"></div>
+                <div class="w-1.5 h-2 bg-blue-500 rounded-full animate-pulse [animation-delay:0.4s]"></div>
+            </div>
+        </div>
+
+        <!-- Loading Text -->
+        <div class="mt-14 flex flex-col items-center">
+            <span class="text-[11px] font-mono font-bold text-blue-400 tracking-[0.5em] uppercase animate-pulse mb-4">Bot Initializing</span>
+            <div class="flex gap-2">
+                <div class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce"></div>
+                <div class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                <div class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<section class="bg-[#050505] min-h-screen py-24 px-4 relative flex flex-col justify-center font-sans">
+    
+    <!-- Fixed Premium Corner Watermark / Branding -->
+    <div class="fixed bottom-6 right-6 z-40  sm:flex items-center gap-3 bg-[#0a0a0a]/80 backdrop-blur-md border border-white/5 py-2 px-3 rounded-md shadow-[0_10px_30px_rgba(0,0,0,0.5)] tracking-widest pointer-events-none select-none group">
+        <div class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+        </div>
+        <div class="flex flex-col font-mono text-[8px] uppercase">
+            <span class="text-gray-500 tracking-[0.1em] font-light">SYSTEM SECURE</span>
+            <span class="text-blue-400 font-bold tracking-[0.25em]">CarbonCraft Intelligence</span>
+        </div>
+    </div>
+    
+    <!-- Back to Home Button -->
+    <a href="{% url 'home' %}" class="absolute top-8 left-6 md:left-12 z-50 flex items-center gap-4 text-gray-500 hover:text-blue-400 transition-all group">
+        <div class="w-12 h-12 rounded-full border border-white/5 bg-[#0a0a0a] flex items-center justify-center group-hover:border-blue-500/50 group-hover:bg-blue-900/20 group-hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all duration-500">
+            <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </div>
+        <span class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">Return to Home</span>
+    </a>
+
+    <!-- Subtle mature gradient background -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/5 rounded-[100%] blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl w-full mx-auto relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-20">
+            <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-blue-600 mb-4 block">CarbonCraft Intelligence </span>
+            <h1 class="text-4xl md:text-5xl font-light tracking-tight text-white mb-6 uppercase">
+                AI <span class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">Command Center</span>
+            </h1>
+            <div class="w-12 h-[1px] bg-blue-600/50 mx-auto mb-6"></div>
+            <p class="text-sm text-gray-400 max-w-xl mx-auto font-light leading-relaxed">
+                Access CarbonCraft's suite of proprietary intelligence tools designed to engineer, navigate, and analyze the automotive ecosystem.
+            </p>
+        </div>
+
+        <!-- Agents Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Agent 1: Mod Analysis -->
+            <div class="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col justify-between group hover:border-blue-600/50 transition-colors duration-500 relative">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-600/0 group-hover:via-blue-600/40 to-transparent transition-all duration-500"></div>
+                <div>
+                    <div class="w-10 h-10 bg-[#111] border border-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-light text-white tracking-tight uppercase mb-2 group-hover:text-blue-400 transition-colors">Consulting Protocol</h3>
+                    <p class="text-[10px] text-gray-500 tracking-[0.1em] uppercase mb-4">Modification Strategy</p>
+                    <p class="text-xs text-gray-400 font-light leading-relaxed mb-6">
+                        Input vehicle specifications and budget constraints to receive a tailored, engineered modification roadmap.
+                    </p>
+                </div>
+                <a href="{% url 'ai_consultant' %}" class="w-full bg-white text-black group-hover:bg-blue-600 group-hover:text-white font-bold py-3 px-4 uppercase tracking-[0.2em] text-[9px] transition-colors duration-300 flex items-center justify-center gap-2">
+                    Initialize
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+
+            <!-- Agent 2: Market Intelligence -->
+            <div class="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col justify-between group hover:border-blue-600/50 transition-colors duration-500 relative">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-600/0 group-hover:via-blue-600/40 to-transparent transition-all duration-500"></div>
+                <div>
+                    <div class="w-10 h-10 bg-[#111] border border-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-light text-white tracking-tight uppercase mb-2 group-hover:text-blue-400 transition-colors">Car Navigator</h3>
+                    <p class="text-[10px] text-gray-500 tracking-[0.1em] uppercase mb-4">Market Intelligence</p>
+                    <p class="text-xs text-gray-400 font-light leading-relaxed mb-6">
+                        Define parameters and primary use cases to extract precise vehicle recommendations from live market feeds.
+                    </p>
+                </div>
+                <a href="{% url 'car_navigator' %}" class="w-full bg-white text-black group-hover:bg-blue-600 group-hover:text-white font-bold py-3 px-4 uppercase tracking-[0.2em] text-[9px] transition-colors duration-300 flex items-center justify-center gap-2">
+                    Initialize
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+
+            <!-- Agent 3: Specs Archive -->
+            <div class="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col justify-between group hover:border-blue-600/50 transition-colors duration-500 relative">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-600/0 group-hover:via-blue-600/40 to-transparent transition-all duration-500"></div>
+                <div>
+                    <div class="w-10 h-10 bg-[#111] border border-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-light text-white tracking-tight uppercase mb-2 group-hover:text-blue-400 transition-colors">Specs Archive</h3>
+                    <p class="text-[10px] text-gray-500 tracking-[0.1em] uppercase mb-4">Technical Blueprint</p>
+                    <p class="text-xs text-gray-400 font-light leading-relaxed mb-6">
+                        Query the master database to retrieve verified engineering data and technical specifications for any vehicle model.
+                    </p>
+                </div>
+                <a href="{% url 'car_specs' %}" class="w-full bg-white text-black group-hover:bg-blue-600 group-hover:text-white font-bold py-3 px-4 uppercase tracking-[0.2em] text-[9px] transition-colors duration-300 flex items-center justify-center gap-2">
+                    Initialize
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+
+            <!-- Agent 4: Car Comparator -->
+            <div class="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col justify-between group hover:border-blue-600/50 transition-colors duration-500 relative">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-600/0 group-hover:via-blue-600/40 to-transparent transition-all duration-500"></div>
+                <div>
+                    <div class="w-10 h-10 bg-[#111] border border-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                    </div>
+                    <h3 class="text-lg font-light text-white tracking-tight uppercase mb-2 group-hover:text-blue-400 transition-colors">Car Comparator</h3>
+                    <p class="text-[10px] text-gray-500 tracking-[0.1em] uppercase mb-4">Comparative Analysis</p>
+                    <p class="text-xs text-gray-400 font-light leading-relaxed mb-6">
+                        Execute a side-by-side technical evaluation between two vehicles, optimized for the Pakistani landscape.
+                    </p>
+                </div>
+                <a href="{% url 'ai_compare' %}" class="w-full bg-white text-black group-hover:bg-blue-600 group-hover:text-white font-bold py-3 px-4 uppercase tracking-[0.2em] text-[9px] transition-colors duration-300 flex items-center justify-center gap-2">
+                    Initialize
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+
+            <!-- Agent 5: AI Diagnostic -->
+            <div class="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col justify-between group hover:border-blue-600/50 transition-colors duration-500 relative">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-600/0 group-hover:via-blue-600/40 to-transparent transition-all duration-500"></div>
+                <div>
+                    <div class="w-10 h-10 bg-[#111] border border-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-light text-white tracking-tight uppercase mb-2 group-hover:text-blue-400 transition-colors">Diagnostic Sentinel</h3>
+                    <p class="text-[10px] text-gray-500 tracking-[0.1em] uppercase mb-4">Mechanical Analysis</p>
+                    <p class="text-xs text-gray-400 font-light leading-relaxed mb-6">
+                        Provide vehicle symptoms and receive a professional mechanical diagnostic protocol to identify issues.
+                    </p>
+                </div>
+                <a href="{% url 'diagnose' %}" class="w-full bg-white text-black group-hover:bg-blue-600 group-hover:text-white font-bold py-3 px-4 uppercase tracking-[0.2em] text-[9px] transition-colors duration-300 flex items-center justify-center gap-2">
+                    Initialize
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+
+            <!-- Agent 6: Engine Recommendation -->
+            <div class="bg-[#0a0a0a] border border-white/5 p-6 flex flex-col justify-between group hover:border-blue-600/50 transition-colors duration-500 relative">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-600/0 group-hover:via-blue-600/40 to-transparent transition-all duration-500"></div>
+                <div>
+                    <div class="w-10 h-10 bg-[#111] border border-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <h3 class="text-lg font-light text-white tracking-tight uppercase mb-2 group-hover:text-blue-400 transition-colors">Engine Recommendation</h3>
+                    <p class="text-[10px] text-gray-500 tracking-[0.1em] uppercase mb-4">Powertrain Options</p>
+                    <p class="text-xs text-gray-400 font-light leading-relaxed mb-6">
+                        Input a car model and budget to receive curated engine options, bolt‑on upgrades, and alteration suggestions.
+                    </p>
+                </div>
+                <a href="{% url 'engine_recommend' %}" class="w-full bg-white text-black group-hover:bg-blue-600 group-hover:text-white font-bold py-3 px-4 uppercase tracking-[0.2em] text-[9px] transition-colors duration-300 flex items-center justify-center gap-2">
+                    Initialize
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pageLoader = document.getElementById('page-loader');
+        if(pageLoader) {
+            setTimeout(() => {
+                pageLoader.classList.add('opacity-0');
+                setTimeout(() => {
+                    pageLoader.style.display = 'none';
+                }, 1000);
+            }, 500);
+        }
+    });
+</script>
+
+{% endblock %}

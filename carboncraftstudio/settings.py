@@ -12,11 +12,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 from dotenv import load_dotenv
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, os.path.join(BASE_DIR, 'django_apps'))
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
@@ -27,7 +28,7 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 SECRET_KEY = 'django-insecure-o6(=#+7k@=jvp)_g=!m&))%=^(b=ax(@nfmf--h1ei^%62uy*#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
     'orders',
     'products',
     'services',
@@ -57,14 +57,10 @@ INSTALLED_APPS = [
 ]
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = ['127.0.0.1']
-if os.name == 'nt':
-    NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
-else:
-    NPM_BIN_PATH = 'npm'
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -103,12 +99,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-if os.getenv('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=600,
-        ssl_require=True
-    )
 
 
 # Password validation
@@ -151,16 +141,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -192,9 +172,9 @@ from django.core.exceptions import PermissionDenied
 RAISE_EXCEPTION = True
 CART_SESSION_ID = 'cart'
 
-import sys
 if GROQ_API_KEY:
-    sys.stderr.write(f"--- API KEY LOADED: {GROQ_API_KEY[:10]}... ---\n")
+    print(f"--- API KEY LOADED: {GROQ_API_KEY[:10]}... ---")
 else:
+    print("--- API KEY NOT FOUND ---")
     sys.stderr.write("--- API KEY NOT FOUND ---\n")
 

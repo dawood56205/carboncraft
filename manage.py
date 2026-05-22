@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
@@ -7,6 +7,11 @@ import sys
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'carboncraftstudio.settings')
+    
+    # Add django_apps to sys.path so grouped apps can be imported
+    from pathlib import Path
+    BASE_DIR = Path(__file__).resolve().parent
+    sys.path.insert(0, os.path.join(BASE_DIR, 'django_apps'))
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
